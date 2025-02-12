@@ -41,17 +41,39 @@ function log(level, message) {
     fs.appendFileSync(logFilePath, logMessage + '\n')
 }
 
+async function logAuditEvent(guild, actionType) {
+    const auditLogs = await guild.fetchAuditLogs({ limit: 5, type: actionType })
+    
+    auditLogs.entries.forEach(entry => {
+        const timestamp = getTimestamp()
+        const currentServerInfo = serverInfo.get()
+        let logMessage = `[${timestamp}] [AUDIT]`
+
+        if (currentServerInfo) {
+            logMessage += ` [Server: ${currentServerInfo.name} (${currentServerInfo.id})]`
+        }
+
+        logMessage += ` Action: ${entry.action}, Executor: ${entry.executor.tag}, Target: ${entry.target ? entry.target.tag : 'N/A'}, Reason: ${entry.reason || 'No reason provided'}, Timestamp: ${entry.createdAt}`
+
+        console.log(logMessage)
+
+        const logFilePath = path.join(__dirname, '..', 'bot.log')
+        fs.appendFileSync(logFilePath, logMessage + '\n')
+    })
+}
+
 const logger = {
     info: (message) => log('INFO', message),
     warn: (message) => log('WARN', message),
     debug: (message) => log('DEBUG', message),
     error: (message) => {
         if (message instanceof Error) {
-            log('ERROR', message);
+            log('ERROR', message)
         } else {
-            log('ERROR', new Error(message)); // Convert string message to an Error object
+            log('ERROR', new Error(message)) // Convert string message to an Error object
         }
-    }
+    },
+    logAuditEvent: logAuditEvent
 }
 
 module.exports = logger
