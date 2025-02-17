@@ -4,7 +4,9 @@
   "description": "Discord Bot",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "node ./utility/deployCommands.js",
+    "dev": "nodemon bot.js"
   },
   "author": "Harsh Gupta",
   "license": "ISC",
