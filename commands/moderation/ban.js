@@ -23,12 +23,12 @@ module.exports = {
 
 		// Check if the user is in the server
 		if (!member) {
-			return interaction.reply({ content: 'User is not in the server.', ephemeral: true })
+			return interaction.reply({ content: 'User is not in the server.', flags: 64 })
 		}
 
 		// Check if the bot has permission to ban the user
 		if (!member.bannable) {
-			return interaction.reply({ content: 'I do not have permission to ban this user.', ephemeral: true })
+			return interaction.reply({ content: 'I do not have permission to ban this user.', flags: 64 })
 		}
 
 		// Ban the user
