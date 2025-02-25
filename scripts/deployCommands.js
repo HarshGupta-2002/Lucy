@@ -1,7 +1,7 @@
 require('dotenv').config()
 const { REST, Routes } = require('discord.js')
-const logger = require('./logger')
-const loadCommands = require('./commandHandler')
+const logger = require('../utility/logger')
+const loadCommands = require('../utility/commandHandler')
 
 const token = process.env.TOKEN
 const clientId = process.env.CLIENT_ID
