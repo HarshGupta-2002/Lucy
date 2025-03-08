@@ -22,7 +22,7 @@ function log(level, message) {
     const timestamp = getTimestamp()
     let logMessage = `[${timestamp}] [${level}]`
 
-    const currentServerInfo = serverInfo.get(guild)
+    const currentServerInfo = serverInfo.get()
     if (currentServerInfo) {
         logMessage += ` [Server: ${currentServerInfo.name} (${currentServerInfo.id})]`
     }
