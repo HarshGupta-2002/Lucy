@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const logger = require('./logger')
 
 function loadCommands(client) {
     const foldersPath = path.join(__dirname, '..', 'commands')

@@ -3,17 +3,17 @@ const logger = require('../../utility/logger')
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('ban')
-		.setDescription('Ban user from server')
+		.setName('kick')
+		.setDescription('Kick user from server')
 		.addUserOption(option =>
 			option.setName('target')
-				.setDescription('User to ban')
+				.setDescription('User to kick')
 				.setRequired(true))
 		.addStringOption(option =>
 			option.setName('reason')
-				.setDescription('Reason for ban')
+				.setDescription('Reason for kick')
 				.setRequired(false))
-		.setDefaultMemberPermissions(PermissionFlagsBits.BanMembers), // Ensures only users with Ban permissions can use it
+		.setDefaultMemberPermissions(PermissionFlagsBits.KickMembers), // Ensures only users with Kick permissions can use it
 
 	async execute(interaction) {
 		const target = interaction.options.getUser('target')
@@ -25,13 +25,13 @@ module.exports = {
 		if (!member) {
 			return interaction.reply({ content: 'User is not in the server', flags: MessageFlags.Ephemeral })
 		}
-		if (!member.bannable) {
-			return interaction.reply({ content: 'I do not have permission to ban this user', flags: MessageFlags.Ephemeral })
+		if (!member.kickable) {
+			return interaction.reply({ content: 'I do not have permission to kick this user', flags: MessageFlags.Ephemeral })
 		}
 
-		// Ban the user
-		await member.ban({ reason })
-		await interaction.reply({ content: `${target.tag} has been banned. Reason: ${reason}` })
-		logger.info(`${target.tag} has been banned from the server. Reason: ${reason}`, interaction.guild)
+		// Kick the user
+		await member.kick({ reason })
+		await interaction.reply({ content: `${target.tag} has been kicked. Reason: ${reason}` })
+		logger.info(`${target.tag} has been kicked from the server. Reason: ${reason}`, interaction.guild)
 	},
 }
