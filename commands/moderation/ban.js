@@ -1,4 +1,6 @@
-const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js')
+const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require('discord.js')
+const logger = require('../../utility/logger')
+const serverInfo = require('../../utility/serverInfo')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -21,20 +23,17 @@ module.exports = {
 		// Fetch the guild member from the target user
 		const member = await interaction.guild.members.fetch(target.id).catch(() => null)
 
-		// Check if the user is in the server
 		if (!member) {
-			return interaction.reply({ content: 'User is not in the server.', flags: 64 })
+			return interaction.reply({ content: 'User is not in the server.', flags: MessageFlags.Ephemeral })
 		}
-
-		// Check if the bot has permission to ban the user
 		if (!member.bannable) {
-			return interaction.reply({ content: 'I do not have permission to ban this user.', flags: 64 })
+			return interaction.reply({ content: 'I do not have permission to ban this user.', flags: MessageFlags.Ephemeral })
 		}
 
+		serverInfo.set(interaction.guild)
 		// Ban the user
 		await member.ban({ reason })
-
-		// Confirmation message
 		await interaction.reply({ content: `${target.tag} has been banned. Reason: ${reason}` })
+		logger.info(`${target.tag} has been banned from the server. Reason: ${reason}`)
 	},
 }

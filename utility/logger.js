@@ -20,9 +20,9 @@ function getTimestamp() {
 
 function log(level, message) {
     const timestamp = getTimestamp()
-    const currentServerInfo = serverInfo.get()
     let logMessage = `[${timestamp}] [${level}]`
 
+    const currentServerInfo = serverInfo.get(guild)
     if (currentServerInfo) {
         logMessage += ` [Server: ${currentServerInfo.name} (${currentServerInfo.id})]`
     }
@@ -41,26 +41,26 @@ function log(level, message) {
     fs.appendFileSync(logFilePath, logMessage + '\n')
 }
 
-async function logAuditEvent(guild, actionType) {
-    const auditLogs = await guild.fetchAuditLogs({ limit: 5, type: actionType })
+// async function logAuditEvent(guild, actionType) {
+//     const auditLogs = await guild.fetchAuditLogs({ limit: 5, type: actionType })
     
-    auditLogs.entries.forEach(entry => {
-        const timestamp = getTimestamp()
-        const currentServerInfo = serverInfo.get()
-        let logMessage = `[${timestamp}] [AUDIT]`
+//     auditLogs.entries.forEach(entry => {
+//         const timestamp = getTimestamp()
+//         const currentServerInfo = serverInfo.get()
+//         let logMessage = `[${timestamp}] [AUDIT]`
 
-        if (currentServerInfo) {
-            logMessage += ` [Server: ${currentServerInfo.name} (${currentServerInfo.id})]`
-        }
+//         if (currentServerInfo) {
+//             logMessage += ` [Server: ${currentServerInfo.name} (${currentServerInfo.id})]`
+//         }
 
-        logMessage += ` Action: ${entry.action}, Executor: ${entry.executor.tag}, Target: ${entry.target ? entry.target.tag : 'N/A'}, Reason: ${entry.reason || 'No reason provided'}, Timestamp: ${entry.createdAt}`
+//         logMessage += ` Action: ${entry.action}, Executor: ${entry.executor.tag}, Target: ${entry.target ? entry.target.tag : 'N/A'}, Reason: ${entry.reason || 'No reason provided'}, Timestamp: ${entry.createdAt}`
 
-        console.log(logMessage)
+//         console.log(logMessage)
 
-        const logFilePath = path.join(__dirname, '..', 'bot.log')
-        fs.appendFileSync(logFilePath, logMessage + '\n')
-    })
-}
+//         const logFilePath = path.join(__dirname, '..', 'bot.log')
+//         fs.appendFileSync(logFilePath, logMessage + '\n')
+//     })
+// }
 
 const logger = {
     info: (message) => log('INFO', message),
@@ -72,8 +72,7 @@ const logger = {
         } else {
             log('ERROR', new Error(message)) // Convert string message to an Error object
         }
-    },
-    logAuditEvent: logAuditEvent
+    }
 }
 
 module.exports = logger
