@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, MessageFlags } = require('discord.js')
 const logger = require('../../utility/logger')
-const serverInfo = require('../../utility/serverInfo')
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -30,10 +29,9 @@ module.exports = {
 			return interaction.reply({ content: 'I do not have permission to ban this user.', flags: MessageFlags.Ephemeral })
 		}
 
-		serverInfo.set(interaction.guild)
 		// Ban the user
 		await member.ban({ reason })
 		await interaction.reply({ content: `${target.tag} has been banned. Reason: ${reason}` })
-		logger.info(`${target.tag} has been banned from the server. Reason: ${reason}`)
+		logger.info(`${target.tag} has been banned from the server. Reason: ${reason}`, interaction.guild)
 	},
 }

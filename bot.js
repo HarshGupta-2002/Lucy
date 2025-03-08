@@ -22,6 +22,14 @@ client.once(Events.ClientReady, readyClient => {
     logger.info(`BRAVO! Bot is online as ${readyClient.user.tag}`)
 })
 
+client.on(Events.GuildCreate, guild => {
+    logger.info(`Joined a server: ${guild.name} (ID: ${guild.id})`)
+})
+client.on(Events.GuildDelete, guild => {
+	logger.info(`Left a server: ${guild.name} (ID: ${guild.id})`)
+})
+
+
 client.on(Events.InteractionCreate, async interaction => {
 	if (!interaction.isChatInputCommand()) return
 	const command = interaction.client.commands.get(interaction.commandName)

@@ -1,6 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-const serverInfo = require('./serverInfo')
 
 function getTimestamp() {
     const now = new Date()
@@ -18,13 +17,12 @@ function getTimestamp() {
     return now.toLocaleString('en-IN', options).replace(',', '').replace(/\//g, '-').replace(' ', 'T')
 }
 
-function log(level, message) {
+function log(level, message, guild=null) {
     const timestamp = getTimestamp()
     let logMessage = `[${timestamp}] [${level}]`
 
-    const currentServerInfo = serverInfo.get()
-    if (currentServerInfo) {
-        logMessage += ` [Server: ${currentServerInfo.name} (${currentServerInfo.id})]`
+    if (guild) {
+        logMessage += ` [Server: ${guild.name} (${guild.id})]`
     }
 
     if (level === 'ERROR' && message instanceof Error) {
@@ -63,14 +61,14 @@ function log(level, message) {
 // }
 
 const logger = {
-    info: (message) => log('INFO', message),
-    warn: (message) => log('WARN', message),
-    debug: (message) => log('DEBUG', message),
-    error: (message) => {
+    info: (message, guild=null) => log('INFO', message, guild),
+    warn: (message, guild=null) => log('WARN', message, guild),
+    debug: (message, guild=null) => log('DEBUG', message, guild),
+    error: (message, guild=null) => {
         if (message instanceof Error) {
-            log('ERROR', message)
+            log('ERROR', message, guild)
         } else {
-            log('ERROR', new Error(message)) // Convert string message to an Error object
+            log('ERROR', new Error(message), guild) // Convert string message to an Error object
         }
     }
 }
