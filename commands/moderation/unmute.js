@@ -34,6 +34,10 @@ module.exports = {
         // Provide the SEND_MESSAGES permission in all text channels
 		const textChannels = interaction.guild.channels.cache.filter(channel => channel.isTextBased())
 		for (const channel of textChannels.values()) {
+            const permission = channel.permissionOverwrites.get(member.id)
+			if (permission && permission.allow.has('SEND_MESSAGES')) {
+				continue
+			}
 			await channel.permissionOverwrites.edit(member.id, { SEND_MESSAGES: true })
         }
         logger.debug(`${target.tag} unmuted from all channels`, interaction.guild)
