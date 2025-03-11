@@ -25,7 +25,7 @@ module.exports = {
 		if (!member) {
 			return interaction.reply({ content: 'User is not in the server', flags: MessageFlags.Ephemeral })
 		}
-		if (!member.muteable) {
+		if (!member.voice || !member.voice.serverMute) {
 			return interaction.reply({ content: 'I do not have permission to mute this user', flags: MessageFlags.Ephemeral })
 		}
         if (member.voice.serverMute) {
