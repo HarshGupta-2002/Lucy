@@ -32,6 +32,6 @@ module.exports = {
 		// Ban the user
 		await member.ban({ reason })
 		await interaction.reply({ content: `${target.tag} has been banned. Reason: ${reason}` })
-		logger.info(`${target.tag} has been banned from the server. Reason: ${reason}`, interaction.guild)
+		logger.info(`${target.tag} has been banned from server. Reason: ${reason}`, interaction.guild)
 	},
 }

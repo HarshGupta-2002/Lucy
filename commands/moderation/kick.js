@@ -32,6 +32,6 @@ module.exports = {
 		// Kick the user
 		await member.kick({ reason })
 		await interaction.reply({ content: `${target.tag} has been kicked. Reason: ${reason}` })
-		logger.info(`${target.tag} has been kicked from the server. Reason: ${reason}`, interaction.guild)
+		logger.info(`${target.tag} has been kicked from server. Reason: ${reason}`, interaction.guild)
 	},
 }
