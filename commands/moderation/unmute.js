@@ -9,7 +9,7 @@ module.exports = {
 			option.setName('target')
 				.setDescription('User to unmute')
 				.setRequired(true))
-		.setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers), // Ensures only users with UnMute permissions can use it
+		.setDefaultMemberPermissions(PermissionFlagsBits.MuteMembers), // Ensures only users with Unmute permissions can use it
 
 	async execute(interaction) {
 		const target = interaction.options.getUser('target')

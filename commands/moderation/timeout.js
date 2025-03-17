@@ -42,7 +42,6 @@ module.exports = {
             const permission = channel.permissionOverwrites.cache.get(member.id)
             if (permission && permission.deny.has(PermissionFlagsBits.SendMessages)) { continue }
             else { alreadyTimedOut = false }
-            // await channel.permissionOverwrites.edit(member.id, { [PermissionFlagsBits.SendMessages]: false }, { reason })
         }
 
         if (alreadyTimedOut) {
@@ -63,7 +62,7 @@ module.exports = {
             if (durationInMs > 0) {
                 setTimeout(async () => {
                     for (const channel of textChannels.values()) {
-                        const permission = channel.permissionOverwrites.get(member.id)
+                        const permission = channel.permissionOverwrites.cache.get(member.id)
                         if (permission && permission.deny.has(PermissionFlagsBits.SendMessages)) {
                             await channel.permissionOverwrites.edit(member.id, { [PermissionFlagsBits.SendMessages]: true }, { reason: 'Timeout expired' })
                         }
