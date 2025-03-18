@@ -67,7 +67,7 @@ module.exports = {
                             await channel.permissionOverwrites.edit(member.id, { [PermissionFlagsBits.SendMessages]: true }, { reason: 'Timeout expired' })
                         }
                     }
-                    await interaction.followUp({ content: `${target.tag}'s timeout has expired and they can now send messages again.` })
+                    await interaction.followUp({ content: `${target.tag}'s timeout has expired and they can now send messages again` })
                     logger.info(`${target.tag}'s timeout has expired`, interaction.guild)
                 }, durationInMs)
             }
