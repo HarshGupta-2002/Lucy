@@ -5,7 +5,7 @@
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "registercommands": "node ./scripts/registerCommands.js",
+    "register": "node ./scripts/registerCommands.js",
     "dev": "nodemon bot.js"
   },
   "author": "Harsh Gupta",
