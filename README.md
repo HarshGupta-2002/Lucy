@@ -7,13 +7,11 @@ A lightweight, slash-command-based Discord moderation bot built with [discord.js
 ## Table of Contents
 
 - [Features](#features)
-- [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
 - [Setup & Installation](#setup--installation)
 - [Configuration](#configuration)
 - [Running the Bot](#running-the-bot)
 - [Registering Slash Commands](#registering-slash-commands)
-- [Commands Reference](#commands-reference)
 - [Logging](#logging)
 - [License](#license)
 
